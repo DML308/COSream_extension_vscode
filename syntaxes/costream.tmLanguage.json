@@ -1,0 +1,116 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "costream",
+	"patterns": [
+		{
+			"include":"#comment"
+		},
+		{
+			"include": "#comment_line"
+		},
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#typeKeywords"
+		},
+		{
+			"include": "#costreamtypeKeywords"
+		},
+		{
+			"include": "#costreamKeywords"
+		},
+		{
+			"include": "#funciton"
+		},
+		{
+			"include": "#number"
+		}
+		
+	],
+	"repository": { 
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.cpp",
+				"match": "\\b(abstract|continue|for|new|switch|assert|goto|do|if|private|this|break|protected|throw|else|public|enum|return|catch|try|interface|static|class|finally|const|super|while|true|false)\\b"
+			}]
+		},
+		"typeKeywords":{
+			"patterns":[{
+				"name":"storage.type.cpp",
+				"match":"\\b(boolean|double|byte|int|short|char|void|long|float)\\b"
+			}]
+		},
+		"costreamtypeKeywords":{
+			"patterns":[{
+				"name":"keyword.type.costream",
+				"match":"\\b(composite|stream|tumbling|sliding|roundrobin|duplicate|FileReader|FileWriter)\\b"
+			}]
+		},
+		"costreamKeywords":{
+			"patterns":[{
+				"name":"storage.type.costream",
+				"match":"\\b(param|init|work|window|matrix|input|output|split|join)\\b"
+			}]
+		},
+		"funciton":{
+			"patterns":[{
+				"name":"entity.name.function.costream",
+				"match":"[a-zA-Z_$][\\w$]*(?= *\\()"
+			}]
+		},
+		"operators":{
+			"patterns":[{
+				"name":"storage.modifier.costream",
+				"match":"(=|\\>|\\<|\\!|\\~|\\?|\\:|\\=\\=|\\<\\=|\\>\\=|\\!\\=|\\&\\&|\\|\\||\\+\\+|\\-\\-|\\+|\\-|\\*|\\/|\\&|\\||\\^|\\%|\\<\\<|\\>\\>|\\>\\>\\>|\\+\\=|\\-\\=|\\*\\=|\\/\\=|\\&\\=|\\|\\=|\\^\\=|\\%\\=|\\<\\<\\=|\\>\\>\\=|\\>\\>\\>\\=)"
+			}]
+		},
+
+		"strings": {
+			"name": "string.quoted.double.costream",
+			"begin": "(\"|')",
+			"end": "(\"|')",
+			"patterns": [
+				{
+					"name": "constant.character.escape.costream",
+					"match": "\\\\."
+				}
+			]
+		},
+		"number":{
+			"patterns":[{
+				"name":"constant.numeric.costream",
+				"match":"(\\d+(_+\\d+)*)[eE]([\\-+]?(\\d+(_+\\d+)*))?"
+			},{
+				"name":"constant.numeric.costream",
+				"match":"(\\d+(_+\\d+)*)\\.(\\d+(_+\\d+)*)([eE][\\-+]?(\\d+(_+\\d+)*))?"
+			},{
+				"name":"constant.numeric.costream",
+				"match":"\\d+(_+\\d+)*"
+			}]
+		},
+		"comment_line":{
+			"patterns":[{
+				"name":"comment.line.costream",
+				"match":"\/\/.*"
+			}]
+		},
+		"comment":{
+			"name": "comment.block.costream",
+			"begin": "\/\\*",
+			"end": "\\*\/",
+			"patterns": [
+				{
+					"name": "comment.block.costream",
+					"match": ".*"
+				}
+			]
+		}
+	},
+	"scopeName": "source.cos"
+}
+
+

@@ -1,0 +1,39 @@
+{
+    "name": "costream",
+    "displayName": "costream",
+    "description": "support a new language COStream",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.33.0"
+    },
+    "publisher": "nirean",
+    "categories": [
+        "Programming Languages"
+    ],
+    "main": "./extension", 
+    "activationEvents": [
+        "*"
+    ],
+    "contributes": {
+
+        "languages": [{
+            "id": "costream",
+            "aliases": ["costream", "costream"],
+            "extensions": [".cos"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "costream",
+            "scopeName": "source.cos",
+            "path": "./syntaxes/costream.tmLanguage.json"
+        }],
+        "themes": [
+			{
+				"label": "Sample Dark",
+				"uiTheme": "vs-dark",
+				"path": "./themes/costream.tmTheme.json"
+			}
+		]
+	
+    }
+}
