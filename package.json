@@ -2,38 +2,50 @@
     "name": "costream",
     "displayName": "costream",
     "description": "support a new language COStream",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "engines": {
         "vscode": "^1.33.0"
     },
+    "repository":"https://github.com/DML308/COSream_extension_vscode",
     "publisher": "nirean",
     "categories": [
         "Programming Languages"
     ],
-    "main": "./extension", 
+    "main": "./extension",
     "activationEvents": [
         "*"
     ],
+    "capabilities": {
+        "definitionProvider": "true"
+    },
     "contributes": {
-
-        "languages": [{
-            "id": "costream",
-            "aliases": ["costream", "costream"],
-            "extensions": [".cos"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "costream",
-            "scopeName": "source.cos",
-            "path": "./syntaxes/costream.tmLanguage.json"
-        }],
+        "languages": [
+            {
+                "id": "costream",
+                "aliases": [
+                    "costream",
+                    "costream"
+                ],
+                "extensions": [
+                    ".cos"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "costream",
+                "scopeName": "source.cos",
+                "path": "./syntaxes/costream.tmLanguage.json"
+            }
+        ],
         "themes": [
-			{
-				"label": "Sample Dark",
-				"uiTheme": "vs-dark",
-				"path": "./themes/costream.tmTheme.json"
-			}
-		]
-	
+            {
+               "label": "costream_dark",
+                "uiTheme": "vs-dark",
+                "path": "./themes/costream.tmTheme.json"
+            }
+        ]
     }
+
 }

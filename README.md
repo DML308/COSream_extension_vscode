@@ -1,3 +1,5 @@
 # costream README
-this is a support for new language COStream
+
+支持了COStream的代码高亮和自动提示补全
+
 

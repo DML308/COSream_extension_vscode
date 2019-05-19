@@ -6,11 +6,12 @@ const vscode = require('vscode')
 
 const stream_outin = ['output', 'input'];
 const keyword = ['sliding', 'tumbling', 'roundrobin', 'duplicate',
-'abstract','continue','for','new','switch','assert','goto',
-'do','if','private','this','break','protected','throw','else',
-'public','enum','return','catch','try','interface','static',
-'class','finally','const','super','while','true','false',
-'boolean','double','byte','int','short','char','void','long','float'];
+    'abstract', 'continue', 'for', 'new', 'switch', 'assert', 'goto',
+    'do', 'if', 'private', 'this', 'break', 'protected', 'throw', 'else',
+    'public', 'enum', 'return', 'catch', 'try', 'interface', 'static',
+    'class', 'finally', 'const', 'super', 'while', 'true', 'false',
+    'boolean', 'double', 'byte', 'int', 'short', 'char', 'void', 'long', 'float'
+];
 
 function getSuggestions(cmdlist, insertText) {
     let commands = cmdlist;
@@ -94,7 +95,9 @@ function provideCompletionItems(document, position, token, context) {
     ];
 }
 
+function provideDefinition(document, position, token, context) {
 
+}
 
 function activate(ctx) {
 
@@ -104,7 +107,14 @@ function activate(ctx) {
             language: 'costream'
         }, {
             provideCompletionItems: provideCompletionItems
-        }))
+        }),
+        vscode.languages.registerDefinitionProvider({
+            scheme: 'file',
+            language: 'costream'
+        }, {
+            provideDefinition: provideDefinition
+        }));
+
 }
 exports.activate = activate;
 

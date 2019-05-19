@@ -1,116 +1,759 @@
 {
-	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-	"name": "costream",
-	"patterns": [
-		{
-			"include":"#comment"
-		},
-		{
-			"include": "#comment_line"
-		},
-		{
-			"include": "#keywords"
-		},
-		{
-			"include": "#strings"
-		},
-		{
-			"include": "#typeKeywords"
-		},
-		{
-			"include": "#costreamtypeKeywords"
-		},
-		{
-			"include": "#costreamKeywords"
-		},
-		{
-			"include": "#funciton"
-		},
-		{
-			"include": "#number"
-		}
-		
-	],
-	"repository": { 
-		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.cpp",
-				"match": "\\b(abstract|continue|for|new|switch|assert|goto|do|if|private|this|break|protected|throw|else|public|enum|return|catch|try|interface|static|class|finally|const|super|while|true|false)\\b"
-			}]
-		},
-		"typeKeywords":{
-			"patterns":[{
-				"name":"storage.type.cpp",
-				"match":"\\b(boolean|double|byte|int|short|char|void|long|float)\\b"
-			}]
-		},
-		"costreamtypeKeywords":{
-			"patterns":[{
-				"name":"keyword.type.costream",
-				"match":"\\b(composite|stream|tumbling|sliding|roundrobin|duplicate|FileReader|FileWriter)\\b"
-			}]
-		},
-		"costreamKeywords":{
-			"patterns":[{
-				"name":"storage.type.costream",
-				"match":"\\b(param|init|work|window|matrix|input|output|split|join)\\b"
-			}]
-		},
-		"funciton":{
-			"patterns":[{
-				"name":"entity.name.function.costream",
-				"match":"[a-zA-Z_$][\\w$]*(?= *\\()"
-			}]
-		},
-		"operators":{
-			"patterns":[{
-				"name":"storage.modifier.costream",
-				"match":"(=|\\>|\\<|\\!|\\~|\\?|\\:|\\=\\=|\\<\\=|\\>\\=|\\!\\=|\\&\\&|\\|\\||\\+\\+|\\-\\-|\\+|\\-|\\*|\\/|\\&|\\||\\^|\\%|\\<\\<|\\>\\>|\\>\\>\\>|\\+\\=|\\-\\=|\\*\\=|\\/\\=|\\&\\=|\\|\\=|\\^\\=|\\%\\=|\\<\\<\\=|\\>\\>\\=|\\>\\>\\>\\=)"
-			}]
-		},
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "costream",
+    "fileTypes": [
+        "cpp",
+        "cc",
+        "cp",
+        "cxx",
+        "c++",
+        "C",
+        "h",
+        "hh",
+        "hpp",
+        "hxx",
+        "h++",
+        "inl",
+        "ipp"
+    ],
+    "firstLineMatch": "-\\*- C\\+\\+ -\\*-",
+    "foldingStartMarker": "(?x)\r\n\t\t /\\*\\*(?!\\*)\r\n\t\t|^(?![^{]*?//|[^{]*?/\\*(?!.*?\\*/.*?\\{)).*?\\{\\s*($|//|/\\*(?!.*?\\*/.*\\S))\r\n\t",
+    "foldingStopMarker": "(?<!\\*)\\*\\*/|^\\s*\\}",
+    "keyEquivalent": "^~C",
 
-		"strings": {
-			"name": "string.quoted.double.costream",
-			"begin": "(\"|')",
-			"end": "(\"|')",
-			"patterns": [
-				{
-					"name": "constant.character.escape.costream",
-					"match": "\\\\."
-				}
-			]
-		},
-		"number":{
-			"patterns":[{
-				"name":"constant.numeric.costream",
-				"match":"(\\d+(_+\\d+)*)[eE]([\\-+]?(\\d+(_+\\d+)*))?"
-			},{
-				"name":"constant.numeric.costream",
-				"match":"(\\d+(_+\\d+)*)\\.(\\d+(_+\\d+)*)([eE][\\-+]?(\\d+(_+\\d+)*))?"
-			},{
-				"name":"constant.numeric.costream",
-				"match":"\\d+(_+\\d+)*"
-			}]
-		},
-		"comment_line":{
-			"patterns":[{
-				"name":"comment.line.costream",
-				"match":"\/\/.*"
-			}]
-		},
-		"comment":{
-			"name": "comment.block.costream",
-			"begin": "\/\\*",
-			"end": "\\*\/",
-			"patterns": [
-				{
-					"name": "comment.block.costream",
-					"match": ".*"
-				}
-			]
-		}
-	},
-	"scopeName": "source.cos"
+    "patterns": [{
+            "include": "#comments"
+        },
+        {
+            "include": "#preprocessor-rule-enabled"
+        },
+        {
+            "include": "#preprocessor-rule-disabled"
+        },
+        {
+            "include": "#preprocessor-rule-other"
+        },
+        {
+            "include": "#pragma-mark"
+        },
+        {
+            "include": "#disabled"
+        },
+        {
+            "include": "#costreamtypeKeywords"
+        },
+        {
+            "include": "#costreamKeywords"
+        },
+        {
+            "begin": "(R|Ru|RU|uR|UR)(\\\"\\+\\*\\()\\.*",
+            "beginCaptures": {
+                "1": {
+                    "name": "prefix"
+                },
+                "2": {
+                    "name": "begin"
+                }
+            },
+            "end": "(\\)\\+\\*\\\")",
+            "endCaptures": {
+                "0": {
+                    "name": "end"
+                }
+            },
+            "name": "raw.string.ccpp",
+            "patterns": [{
+                "include": "#comments"
+            }]
+        },
+        {
+            "begin": "(R|Ru|RU|uR|UR)(\\\"\\()\\.*",
+            "beginCaptures": {
+                "1": {
+                    "name": "prefix"
+                },
+                "2": {
+                    "name": "begin"
+                }
+            },
+            "end": "(\\)\\\")",
+            "endCaptures": {
+                "0": {
+                    "name": "end"
+                }
+            },
+            "name": "raw.string.ccpp",
+            "patterns": [{
+                "include": "#comments"
+            }]
+        },
+        {
+            "begin": "(\\:)\\s*(\\w+\\(\\w+\\))+",
+            "beginCaptures": {
+                "1": {
+                    "name": "begin"
+                },
+                "2": {
+                    "name": "variable"
+                }
+            },
+            "end": "\\{",
+            "endCaptures": {
+                "0": {
+                    "name": "open.curly.bracket.block"
+                }
+            },
+            "name": "member.initializer",
+            "patterns": [{
+                "include": "#comments"
+            }]
+        },
+        {
+            "match": "\\b(break|case|continue|default|do|else|for|goto|if|_Pragma|return|switch|while)\\b",
+            "name": "keyword.control.c"
+        },
+        {
+            "match": "\\b(catch|operator|try|throw|using|namespace)\\b",
+            "name": "keyword.control.c++"
+        },
+        {
+            "match": "\\bdelete\\b(\\s*\\[\\])?|\\bnew\\b(?!])",
+            "name": "keyword.control.c++"
+        },
+        {
+            "match": "\\b(and|and_eq|bitand|bitor|compl|not|not_eq|or|or_eq|typeid|xor|xor_eq)\\b",
+            "name": "keyword.operator.c++"
+        },
+        {
+            "match": "\\b(const_cast|dynamic_cast|reinterpret_cast|static_cast)\\b\\s*",
+            "name": "keyword.operator.cast.c++"
+        },
+        {
+            "match": "\\b(asm|__asm__|auto|bool|_Bool|char|_Complex|double|enum|float|_Imaginary|string|int|long|short|signed|struct|typedef|union|unsigned|void)\\b",
+            "name": "storage.type.c"
+        },
+        {
+            "match": "\\b(class|wchar_t|nullptr_t)\\b",
+            "name": "storage.type.c++"
+        },
+        {
+            "match": "\\b(size_t|int8_t|int16_t|int32_t|int64_t|uint8_t|uint16_t|uint32_t|uint64_t|char16_t|char32_t)\\b",
+            "name": "storage.type.c++11"
+        },
+        {
+            "match": "\\btemplate\\b\\s*",
+            "name": "storage.type.template.c++"
+        },
+        {
+            "match": "\\b(const|extern|register|restrict|static|volatile|inline)\\b",
+            "name": "storage.modifier.c"
+        },
+        {
+            "match": "\\b(export|mutable|typename)\\b",
+            "name": "storage.modifier.c++"
+        },
+        {
+            "match": "\\b(friend|explicit|virtual)\\b",
+            "name": "storage.modifier.c++"
+        },
+        {
+            "match": "\\b(private|protected|public)\\b\\s*\\:",
+            "name": "storage.modifier.c++"
+        },
+        {
+            "match": "\\b(private|protected|public)\\b",
+            "name": "storage.modifier.c++"
+        },
+        {
+            "match": "\\b(export|mutable|typename)\\b",
+            "name": "storage.modifier.c++"
+        },
+        {
+            "match": "\\b(constexpr|auto)\\b",
+            "name": "storage.modifier.c++"
+        },
+        {
+            "match": "\\b(override|final|noexcept)\\b",
+            "name": "storage.modifier.c++"
+        },
+        {
+            "comment": "common C constant naming idiom -- kConstantVariable",
+            "match": "\\bk[A-Z]\\w*\\b",
+            "name": "constant.other.variable.mac-classic.c"
+        },
+        {
+            "match": "\\bg[A-Z]\\w*\\b",
+            "name": "variable.other.readwrite.global.mac-classic.c"
+        },
+        {
+            "match": "\\bs[A-Z]\\w*\\b",
+            "name": "variable.other.readwrite.static.mac-classic.c"
+        },
+        {
+            "comment": "common C++ instance var naming idiom -- fMemberName",
+            "match": "\\b(f|m)[A-Z]\\w*\\b",
+            "name": "variable.other.readwrite.member.c++"
+        },
+        {
+            "match": "\\bthis\\b",
+            "name": "variable.language.c++"
+        },
+        {
+            "match": "\\b(NULL|true|false|TRUE|FALSE)\\b",
+            "name": "constant.language.c"
+        },
+        {
+            "match": "\\b(nullptr|EXIT_SUCCESS|EXIT_FAILURE)\\b",
+            "name": "constant.language.c++"
+        },
+        {
+            "match": "\\b((0(x|X)[0-9a-fA-F]*)|(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))((e|E)(\\+|-)?[0-9]+)?)(L|l|UL|ul|u|U|F|f|ll|LL|ull|ULL)?\\b",
+            "name": "constant.numeric.c"
+        },
+        {
+            "match": "\\b(u_char|u_short|u_int|u_long|ushort|uint|u_quad_t|quad_t|qaddr_t|caddr_t|daddr_t|dev_t|fixpt_t|blkcnt_t|blksize_t|gid_t|in_addr_t|in_port_t|ino_t|key_t|mode_t|nlink_t|id_t|pid_t|off_t|segsz_t|swblk_t|uid_t|id_t|clock_t|size_t|ssize_t|time_t|useconds_t|suseconds_t)\\b",
+            "name": "support.type.sys-types.c"
+        },
+        {
+            "match": "\\b(pthread_attr_t|pthread_cond_t|pthread_condattr_t|pthread_mutex_t|pthread_mutexattr_t|pthread_once_t|pthread_rwlock_t|pthread_rwlockattr_t|pthread_t|pthread_key_t)\\b",
+            "name": "support.type.pthread.c"
+        },
+        {
+            "match": "\\b(int8_t|int16_t|int32_t|int64_t|uint8_t|uint16_t|uint32_t|uint64_t|int_least8_t|int_least16_t|int_least32_t|int_least64_t|uint_least8_t|uint_least16_t|uint_least32_t|uint_least64_t|int_fast8_t|int_fast16_t|int_fast32_t|int_fast64_t|uint_fast8_t|uint_fast16_t|uint_fast32_t|uint_fast64_t|intptr_t|uintptr_t|intmax_t|intmax_t|uintmax_t|uintmax_t)\\b",
+            "name": "support.type.stdint.c"
+        },
+        {
+            "match": "\\b(noErr|kNilOptions|kInvalidID|kVariableLengthArray)\\b",
+            "name": "support.constant.mac-classic.c"
+        },
+        {
+            "match": "\\b(AbsoluteTime|Boolean|Byte|ByteCount|ByteOffset|BytePtr|CompTimeValue|ConstLogicalAddress|ConstStrFileNameParam|ConstStringPtr|Duration|Fixed|FixedPtr|Float32|Float32Point|Float64|Float80|Float96|FourCharCode|Fract|FractPtr|Handle|ItemCount|LogicalAddress|OptionBits|OSErr|OSStatus|OSType|OSTypePtr|PhysicalAddress|ProcessSerialNumber|ProcessSerialNumberPtr|ProcHandle|Ptr|ResType|ResTypePtr|ShortFixed|ShortFixedPtr|SignedByte|SInt16|SInt32|SInt64|SInt8|Size|StrFileName|StringHandle|StringPtr|TimeBase|TimeRecord|TimeScale|TimeValue|TimeValue64|UInt16|UInt32|UInt64|UInt8|UniChar|UniCharCount|UniCharCountPtr|UniCharPtr|UnicodeScalarValue|UniversalProcHandle|UniversalProcPtr|UnsignedFixed|UnsignedFixedPtr|UnsignedWide|UTF16Char|UTF32Char|UTF8Char)\\b",
+            "name": "support.type.mac-classic.c"
+        },
+        {
+            "match": "\\w+\\:\\:\\w+\\*",
+            "name": "pointer.ccpp"
+        },
+        {
+            "match": "\\*\\(\\w+\\)",
+            "name": "pointer.ccpp"
+        },
+        {
+            "match": "\\(\\w+\\)\\*",
+            "name": "pointer.ccpp"
+        },
+        {
+            "match": "\\w+\\*",
+            "name": "pointer.ccpp"
+        },
+        {
+            "match": "\\*\\\\w+",
+            "name": "pointer.ccpp"
+        },
+        {
+            "match": "\\&\\\\w+",
+            "name": "address.ccpp"
+        },
+        {
+            "match": "\\w+(?=\\[)",
+            "name": "array.ccpp"
+        },
+        {
+            "match": "(?<=class|wchar_t|nullptr_t)\\s\\w+",
+            "name": "meta.class-struct.c++ entity.name.type.c++"
+        },
+        {
+            "match": "\\w+(?=\\()",
+            "name": "meta.function.c entity.name.function.c"
+        },
+        {
+            "match": "(?<=\\.)\\w+(?=[^\\w|\\.])",
+            "name": "meta.function.c meta.block.c meta.function-call.c support.function.any-method.c"
+        },
+        {
+            "match": "(?<=\\:\\:)\\w+",
+            "name": "meta.function.c entity.name.function.c"
+        },
+        {
+            "match": "\\w+\\:\\:",
+            "name": "meta.function.c entity.name.function.c"
+        },
+        {
+            "match": "\\:\\:\\w+",
+            "name": "meta.function.c entity.name.function.c"
+        },
+        {
+            "match": "\\+\\=|\\-\\=|\\*\\=|\\/\\=|\\%\\=|\\&\\=|\\|\\=|\\^\\=|\\<\\<\\=|\\>\\>\\=",
+            "name": "keyword.operator.compound.ccpp"
+        },
+        {
+            "match": "!(?<=.)",
+            "name": "keyword.operator.logical.ccpp"
+        },
+        {
+            "match": "\\&\\&|\\|\\|",
+            "name": "keyword.operator.logical.ccpp"
+        },
+        {
+            "match": "~(?<=.)",
+            "name": "keyword.operator.bitwise.ccpp"
+        },
+        {
+            "match": "\\&|\\||\\^|\\<\\<|\\>\\>",
+            "name": "keyword.operator.bitwise.ccpp"
+        },
+        {
+            "match": "\\>\\=",
+            "name": "keyword.operator.comparison.ccpp"
+        },
+        {
+            "match": "\\<\\=",
+            "name": "keyword.operator.comparison.ccpp"
+        },
+        {
+            "match": "\\=\\=|\\!\\=|\\<|\\>",
+            "name": "keyword.operator.comparison.ccpp"
+        },
+        {
+            "match": "\\=|\\+|\\-|\\*|\\/|\\%",
+            "name": "keyword.operator.arithmetic.ccpp"
+        },
+        {
+            "match": "(?<=\\s)\\}(?=break|case|continue|default|do|else|for|goto|if|_Pragma|return|switch|while)",
+            "name": "open.curly.bracket.block.ccpp"
+        },
+        {
+            "match": "\\}(?=[^\\;\\s\\r\\n])",
+            "name": "close.curly.bracket.ccpp"
+        },
+        {
+            "match": "(?<=[^\\s\\r\\n])\\s*\\}",
+            "name": "close.curly.bracket.ccpp"
+        },
+        {
+            "match": "\\{(?=(\\s*|\\t*)\\/\\/\\s*.*(\\r|\\n))",
+            "name": "open.curly.bracket.block.ccpp"
+        },
+        {
+            "match": "\\{(?=(\\s*|\\t*)(\\r|\\n))",
+            "name": "open.curly.bracket.block.ccpp"
+        },
+        {
+            "match": "(?<=\\s)\\}(?=\\;?)",
+            "name": "close.curly.bracket.block.ccpp"
+        },
+        {
+            "match": "^\\}",
+            "name": "close.curly.bracket.block.ccpp"
+        },
+        {
+            "match": "\\{",
+            "name": "open.curly.bracket.ccpp"
+        },
+        {
+            "match": "\\}",
+            "name": "close.curly.bracket.ccpp"
+        },
+        {
+            "match": "\\(",
+            "name": "open.round.bracket.ccpp"
+        },
+        {
+            "match": "\\)",
+            "name": "close.round.bracket.ccpp"
+        },
+        {
+            "match": "\\[",
+            "name": "open.angle.bracket.ccpp"
+        },
+        {
+            "match": "\\]",
+            "name": "close.angle.bracket.ccpp"
+        },
+        {
+            "match": "\\.",
+            "name": "period.ccpp"
+        },
+        {
+            "match": "\\,",
+            "name": "coma.ccpp"
+        },
+        {
+            "match": "\\;(?=(\\s*|\\t*)\\/\\/\\s*.*)",
+            "name": "semi_colon.eol.ccpp"
+        },
+        {
+            "match": "\\;(?=(\\s*)(\\r|\\n))",
+            "name": "semi_colon.eol.ccpp"
+        },
+        {
+            "match": "\\s*?\\;\\s*?$",
+            "name": "semi_colon.eol.ccpp"
+        },
+        {
+            "match": "\\;",
+            "name": "semi_colon.ccpp"
+        },
+        {
+            "begin": "\"",
+            "beginCaptures": {
+                "0": {
+                    "name": "punctuation.definition.string.begin.c"
+                }
+            },
+            "end": "\"",
+            "endCaptures": {
+                "0": {
+                    "name": "punctuation.definition.string.end.c"
+                }
+            },
+            "name": "string.quoted.double.c",
+            "patterns": [{
+                    "include": "#string_escaped_char"
+                },
+                {
+                    "include": "#string_placeholder"
+                }
+            ]
+        },
+        {
+            "begin": "'",
+            "beginCaptures": {
+                "0": {
+                    "name": "punctuation.definition.string.begin.c"
+                }
+            },
+            "end": "'",
+            "endCaptures": {
+                "0": {
+                    "name": "punctuation.definition.string.end.c"
+                }
+            },
+            "name": "string.quoted.single.c",
+            "patterns": [{
+                "include": "#string_escaped_char"
+            }]
+        },
+        {
+            "begin": "(?x)\r\n        \t\t^\\s*\\#\\s*(define)\\s+             # define\r\n        \t\t((?<id>[a-zA-Z_][a-zA-Z0-9_]*))  # macro name\r\n        \t\t(?:                              # and optionally:\r\n        \t\t    (\\()                         # an open parenthesis\r\n        \t\t        (\r\n        \t\t            \\s* \\g<id> \\s*       # first argument\r\n        \t\t            ((,) \\s* \\g<id> \\s*)*  # additional arguments\r\n        \t\t            (?:\\.\\.\\.)?          # varargs ellipsis?\r\n        \t\t        )\r\n        \t\t    (\\))                         # a close parenthesis\r\n        \t\t)?\r\n        \t",
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.control.import.define.c"
+                },
+                "2": {
+                    "name": "entity.name.function.preprocessor.c"
+                },
+                "4": {
+                    "name": "punctuation.definition.parameters.c"
+                },
+                "5": {
+                    "name": "variable.parameter.preprocessor.c"
+                },
+                "7": {
+                    "name": "punctuation.separator.parameters.c"
+                },
+                "8": {
+                    "name": "punctuation.definition.parameters.c"
+                }
+            },
+            "end": "(?=(?://|/\\*))|$",
+            "name": "meta.preprocessor.macro.c",
+            "patterns": [{
+                    "match": "(?>\\\\\\s*\\n)",
+                    "name": "punctuation.separator.continuation.c"
+                },
+                {
+                    "include": "$base"
+                }
+            ]
+        },
+        {
+            "begin": "^\\s*#\\s*(error|warning)\\b",
+            "captures": {
+                "1": {
+                    "name": "keyword.control.import.error.c"
+                }
+            },
+            "end": "$",
+            "name": "meta.preprocessor.diagnostic.c",
+            "patterns": [{
+                "match": "(?>\\\\\\s*\\n)",
+                "name": "punctuation.separator.continuation.c"
+            }]
+        },
+        {
+            "begin": "^\\s*#\\s*(include|import)\\b\\s+",
+            "captures": {
+                "1": {
+                    "name": "keyword.control.import.include.c"
+                }
+            },
+            "end": "(?=(?://|/\\*))|$",
+            "name": "meta.preprocessor.c.include",
+            "patterns": [{
+                    "match": "(?>\\\\\\s*\\n)",
+                    "name": "punctuation.separator.continuation.c"
+                },
+                {
+                    "begin": "\"",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.string.begin.c"
+                        }
+                    },
+                    "end": "\"",
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.string.end.c"
+                        }
+                    },
+                    "name": "string.quoted.double.include.c"
+                },
+                {
+                    "begin": "<",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.string.begin.c"
+                        }
+                    },
+                    "end": ">",
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.string.end.c"
+                        }
+                    },
+                    "name": "string.quoted.other.lt-gt.include.c"
+                }
+            ]
+        },
+        {
+            "begin": "^\\s*#\\s*(define|defined|elif|else|if|ifdef|ifndef|line|pragma|undef)\\b",
+            "captures": {
+                "1": {
+                    "name": "keyword.control.import.c"
+                }
+            },
+            "end": "(?=(?://|/\\*))|$",
+            "name": "meta.preprocessor.c",
+            "patterns": [{
+                "match": "(?>\\\\\\s*\\n)",
+                "name": "punctuation.separator.continuation.c"
+            }]
+        }
+    ],
+    "repository": {
+        "comments": {
+            "patterns": [{
+                    "captures": {
+                        "1": {
+                            "name": "meta.toc-list.banner.block.c"
+                        }
+                    },
+                    "match": "^/\\* =(\\s*.*?)\\s*= \\*/$\\n?",
+                    "name": "comment.block.c"
+                },
+                {
+                    "begin": "/\\*",
+                    "captures": {
+                        "0": {
+                            "name": "punctuation.definition.comment.c"
+                        }
+                    },
+                    "end": "\\*/",
+                    "name": "comment.block.c"
+                },
+                {
+                    "match": "\\*/.*\\n",
+                    "name": "invalid.illegal.stray-comment-end.c"
+                },
+                {
+                    "captures": {
+                        "1": {
+                            "name": "meta.toc-list.banner.line.c"
+                        }
+                    },
+                    "match": "^// =(\\s*.*?)\\s*=\\s*$\\n?",
+                    "name": "comment.line.banner.c++"
+                },
+                {
+                    "begin": "//",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.comment.c"
+                        }
+                    },
+                    "end": "$\\n?",
+                    "name": "comment.line.double-slash.c++",
+                    "patterns": [{
+                        "match": "(?>\\\\\\s*\\n)",
+                        "name": "punctuation.separator.continuation.c++"
+                    }]
+                }
+            ]
+        },
+        "string_escaped_char": {
+            "patterns": [{
+                    "match": "\\\\(\\\\|[abefnprtv'\"?]|[0-3]\\d{,2}|[4-7]\\d?|x[a-fA-F0-9]{,2}|u[a-fA-F0-9]{,4}|U[a-fA-F0-9]{,8})",
+                    "name": "constant.character.escape.c"
+                },
+                {
+                    "match": "\\\\.",
+                    "name": "invalid.illegal.unknown-escape.c"
+                }
+            ]
+        },
+        "string_placeholder": {
+            "patterns": [{
+                    "match": "(?x)%\r\n    \t\t\t\t\t\t(\\d+\\$)?                             # field (argument #)\r\n    \t\t\t\t\t\t[#0\\- +']*                           # flags\r\n    \t\t\t\t\t\t[,;:_]?                              # separator character (AltiVec)\r\n    \t\t\t\t\t\t((-?\\d+)|\\*(-?\\d+\\$)?)?              # minimum field width\r\n    \t\t\t\t\t\t(\\.((-?\\d+)|\\*(-?\\d+\\$)?)?)?         # precision\r\n    \t\t\t\t\t\t(hh|h|ll|l|j|t|z|q|L|vh|vl|v|hv|hl)? # length modifier\r\n    \t\t\t\t\t\t[diouxXDOUeEfFgGaACcSspn%]           # conversion type\r\n    \t\t\t\t\t",
+                    "name": "constant.other.placeholder.c"
+                },
+                {
+                    "match": "%",
+                    "name": "invalid.illegal.placeholder.c"
+                }
+            ]
+        },
+        "disabled": {
+            "begin": "^\\s*#\\s*if(n?def)?\\b.*$",
+            "comment": "eat nested preprocessor if(def)s",
+            "end": "^\\s*#\\s*endif\\b",
+            "patterns": [{
+                    "include": "#disabled"
+                },
+                {
+                    "include": "#pragma-mark"
+                }
+            ]
+        },
+        "pragma-mark": {
+            "captures": {
+                "1": {
+                    "name": "meta.preprocessor.c"
+                },
+                "2": {
+                    "name": "keyword.control.import.pragma.c"
+                },
+                "3": {
+                    "name": "meta.toc-list.pragma-mark.c"
+                }
+            },
+            "match": "^\\s*(#\\s*(pragma\\s+mark)\\s+(.*))",
+            "name": "meta.section"
+        },
+        "preprocessor-rule-disabled": {
+            "begin": "^\\s*(#(if)\\s+(0)\\b).*",
+            "captures": {
+                "1": {
+                    "name": "meta.preprocessor.c"
+                },
+                "2": {
+                    "name": "keyword.control.import.if.c"
+                },
+                "3": {
+                    "name": "constant.numeric.preprocessor.c"
+                }
+            },
+            "end": "^\\s*(#\\s*(endif)\\b)",
+            "patterns": [{
+                    "begin": "^\\s*(#\\s*(else)\\b)",
+                    "captures": {
+                        "1": {
+                            "name": "meta.preprocessor.c"
+                        },
+                        "2": {
+                            "name": "keyword.control.import.else.c"
+                        }
+                    },
+                    "end": "(?=^\\s*#\\s*endif\\b)",
+                    "patterns": [{
+                        "include": "$base"
+                    }]
+                },
+                {
+                    "begin": "",
+                    "end": "(?=^\\s*#\\s*(else|endif)\\b)",
+                    "name": "comment.block.preprocessor.if-branch",
+                    "patterns": [{
+                            "include": "#disabled"
+                        },
+                        {
+                            "include": "#pragma-mark"
+                        }
+                    ]
+                }
+            ]
+        },
+        "preprocessor-rule-enabled": {
+            "begin": "^\\s*(#(if)\\s+(0*1)\\b)",
+            "captures": {
+                "1": {
+                    "name": "meta.preprocessor.c"
+                },
+                "2": {
+                    "name": "keyword.control.import.if.c"
+                },
+                "3": {
+                    "name": "constant.numeric.preprocessor.c"
+                }
+            },
+            "end": "^\\s*(#\\s*(endif)\\b)",
+            "patterns": [{
+                    "begin": "^\\s*(#\\s*(else)\\b).*",
+                    "captures": {
+                        "1": {
+                            "name": "meta.preprocessor.c"
+                        },
+                        "2": {
+                            "name": "keyword.control.import.else.c"
+                        }
+                    },
+                    "contentName": "comment.block.preprocessor.else-branch",
+                    "end": "(?=^\\s*#\\s*endif\\b)",
+                    "patterns": [{
+                            "include": "#disabled"
+                        },
+                        {
+                            "include": "#pragma-mark"
+                        }
+                    ]
+                },
+                {
+                    "begin": "",
+                    "end": "(?=^\\s*#\\s*(else|endif)\\b)",
+                    "patterns": [{
+                        "include": "$base"
+                    }]
+                }
+            ]
+        },
+        "preprocessor-rule-other": {
+            "begin": "^\\s*(#\\s*(if(n?def)?)\\b.*?(?:(?=(?://|/\\*))|$))",
+            "captures": {
+                "1": {
+                    "name": "meta.preprocessor.c"
+                },
+                "2": {
+                    "name": "keyword.control.import.c"
+                }
+            },
+            "end": "^\\s*(#\\s*(endif)\\b)",
+            "patterns": [{
+                "include": "$base"
+            }]
+        },
+        "costreamtypeKeywords": {
+            "patterns": [{
+                "name": "keyword.type.costream",
+                "match": "\\b(composite|stream|tumbling|sliding|roundrobin|duplicate|FileReader|FileWriter)\\b"
+            }]
+        },
+        "costreamKeywords": {
+            "patterns": [{
+                "name": "storage.type.costream",
+                "match": "\\b(param|init|work|window|matrix|input|output|split|join)\\b"
+            }]
+        }
+    },
+    "scopeName": "source.cos"
+
 }
-
-
